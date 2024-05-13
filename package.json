@@ -15,7 +15,11 @@
     "sanity"
   ],
   "dependencies": {
+    "@emotion/css": "^11.11.2",
+    "@portabletext/react": "^3.0.18",
+    "@sanity/locale-fr-fr": "^1.2.5",
     "@sanity/vision": "^3.41.1",
+    "groq": "^3.41.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanity": "^3.41.1",
