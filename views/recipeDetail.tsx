@@ -19,18 +19,20 @@ const RecipePreview = ({document}: any) => {
   const client = useClient()
   const recipe = document.displayed
 
+  console.log(document)
+
   const pr = usePaneRouter()
 
   const [images, setImages] = useState<string[]>([])
   const [category, setCategory] = useState<any>(null)
 
   useEffect(() => {
-    if (!recipe.title) {
-      pr.setView('editor')
-      return
-    }
-
     client.fetch(recipeRefQueries, {id: recipe._id}).then((data) => {
+      if (data === null || !data.title) {
+        pr.setView('editor')
+        return
+      }
+
       if (data.images) {
         setImages(data.images)
       }
