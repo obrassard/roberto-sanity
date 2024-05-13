@@ -1,6 +1,4 @@
-// ./deskStructure.js
-
-import {DefaultDocumentNodeResolver} from 'sanity/structure'
+import {DefaultDocumentNodeResolver, usePaneRouter} from 'sanity/structure'
 import styled from 'styled-components'
 import {useClient} from 'sanity'
 import {useEffect, useState} from 'react'
@@ -21,10 +19,17 @@ const RecipePreview = ({document}: any) => {
   const client = useClient()
   const recipe = document.displayed
 
+  const pr = usePaneRouter()
+
   const [images, setImages] = useState<string[]>([])
   const [category, setCategory] = useState<any>(null)
 
   useEffect(() => {
+    if (!recipe.title) {
+      pr.setView('editor')
+      return
+    }
+
     client.fetch(recipeRefQueries, {id: recipe._id}).then((data) => {
       if (data.images) {
         setImages(data.images)
@@ -34,7 +39,8 @@ const RecipePreview = ({document}: any) => {
         setCategory(data.categories)
       }
     })
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Card>
@@ -44,17 +50,19 @@ const RecipePreview = ({document}: any) => {
           <BookContainer>
             <span>📖</span>
             <span>
-              Disponible dans le livre <strong>{recipe.book}</strong> à la{' '}
+              Disponible dans <strong>{recipe.book}</strong> à la{' '}
               <strong>page {recipe.page}</strong>
             </span>
           </BookContainer>
         )}
+
         {recipe.favorite && (
           <LikedContainer>
             <span>❤️</span>
             <span>Recette favorite</span>
           </LikedContainer>
         )}
+
         {category && (
           <CategoryContainer>
             <span>{category.icon}</span>
@@ -62,6 +70,14 @@ const RecipePreview = ({document}: any) => {
           </CategoryContainer>
         )}
       </Wrapper>
+      {recipe.url && (
+        <WebUrlContainer>
+          <div>Retrouvez cette recette sur {new URL(recipe.url).hostname}</div>
+          <a href={recipe.url} target="_blank" rel="noreferrer">
+            Afficher sur le site
+          </a>
+        </WebUrlContainer>
+      )}
       {recipe.notes && (
         <>
           <SectionTitle>Notes</SectionTitle>
@@ -124,6 +140,26 @@ const CategoryContainer = styled(LikedContainer)`
   color: #333;
 `
 
+const WebUrlContainer = styled(LikedContainer)`
+  flex-direction: column;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  max-width: 450px;
+  width: calc(100% - 3rem);
+  font-size: 1rem;
+  background: #d4f5e2;
+  color: #086c32;
+
+  a {
+    margin-top: 1rem;
+    color: white;
+    background: #086c32;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+`
+
 const SectionTitle = styled.h2`
   font-size: 1.4rem;
   margin-top: 2rem;
@@ -133,13 +169,11 @@ const SectionTitle = styled.h2`
 `
 
 export const getDefaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
-  // Render the JSON preview only on posts or the siteSettings document
+  // Render the recipe preview only on recipe document type
   if (schemaType === 'recipe') {
     return S.document().views([
-      S.view.form().title('Modifier la recette'),
       S.view.component(RecipePreview).title('Fiche recette'),
+      S.view.form().title('Modifier la recette'),
     ])
   }
 }
-
-//...rest of structure
