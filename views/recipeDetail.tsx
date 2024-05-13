@@ -1,7 +1,7 @@
 import {DefaultDocumentNodeResolver, usePaneRouter} from 'sanity/structure'
 import styled from 'styled-components'
 import {useClient} from 'sanity'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import groq from 'groq'
 import {PortableText} from '@portabletext/react'
 
@@ -19,17 +19,23 @@ const RecipePreview = ({document}: any) => {
   const client = useClient()
   const recipe = document.displayed
 
-  console.log(document)
-
-  const pr = usePaneRouter()
+  const {setView} = usePaneRouter()
 
   const [images, setImages] = useState<string[]>([])
   const [category, setCategory] = useState<any>(null)
 
+  const recipeUrl = useMemo(() => {
+    try {
+      return recipe.url ? new URL(recipe.url) : null
+    } catch {
+      return null
+    }
+  }, [recipe.url])
+
   useEffect(() => {
     client.fetch(recipeRefQueries, {id: recipe._id}).then((data) => {
       if (data === null || !data.title) {
-        pr.setView('editor')
+        setView('editor')
         return
       }
 
@@ -72,10 +78,10 @@ const RecipePreview = ({document}: any) => {
           </CategoryContainer>
         )}
       </Wrapper>
-      {recipe.url && (
+      {recipeUrl && (
         <WebUrlContainer>
-          <div>Retrouvez cette recette sur {new URL(recipe.url).hostname}</div>
-          <a href={recipe.url} target="_blank" rel="noreferrer">
+          <div>Retrouvez cette recette sur {recipeUrl.hostname}</div>
+          <a href={recipeUrl.href} target="_blank" rel="noreferrer">
             Afficher sur le site
           </a>
         </WebUrlContainer>
