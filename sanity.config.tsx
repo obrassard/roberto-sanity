@@ -18,6 +18,9 @@ export default defineConfig({
   scheduledPublishing: {
     enabled: false,
   },
+  tasks: {
+    enabled: false,
+  },
   plugins: [
     structureTool({structure, defaultDocumentNode: getDefaultDocumentNode}),
     frFRLocale(),
