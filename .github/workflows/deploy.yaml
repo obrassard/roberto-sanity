@@ -1,0 +1,15 @@
+name: Deploy Sanity Studio
+on:
+  push:
+    branches: [main]
+jobs:
+  sanity-deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Sanity
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install
+      - run: npm run deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
