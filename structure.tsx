@@ -45,7 +45,7 @@ const favoriteRecipes = defineStructure<ListItemBuilder>((S) =>
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
-    .title('Content')
+    .title('Roberto')
     .items([
       recipeCategories(S, context),
       favoriteRecipes(S, context),
