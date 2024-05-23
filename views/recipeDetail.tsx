@@ -87,10 +87,10 @@ const RecipePreview = ({document}: any) => {
         </WebUrlContainer>
       )}
       {recipe.notes && (
-        <>
+        <PortableTextContainer>
           <SectionTitle>Notes</SectionTitle>
           <PortableText value={recipe.notes} />
-        </>
+        </PortableTextContainer>
       )}
       {images.length > 0 && (
         <>
@@ -113,6 +113,7 @@ const RecipePreview = ({document}: any) => {
 
 const Card = styled.div`
   background: white;
+  color: #333;
   padding: 2rem;
 `
 
@@ -150,6 +151,9 @@ const CategoryContainer = styled(LikedContainer)`
 
 const WebUrlContainer = styled(LikedContainer)`
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   margin-top: 1.5rem;
   padding: 1.5rem;
   max-width: 450px;
@@ -174,6 +178,19 @@ const SectionTitle = styled.h2`
   margin-bottom: 1rem;
   border-bottom: 2px solid #efefef;
   padding-bottom: 0.6rem;
+`
+
+const PortableTextContainer = styled.div`
+  blockquote {
+    margin: 0;
+    padding: 1rem;
+    border-left: 4px solid #086c32;
+  }
+
+  a {
+    color: #086c32;
+    text-decoration: underline;
+  }
 `
 
 export const getDefaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {

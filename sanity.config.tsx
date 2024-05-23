@@ -5,13 +5,14 @@ import {schemaTypes} from './schema'
 import {structure} from './structure'
 import {frFRLocale} from '@sanity/locale-fr-fr'
 import {getDefaultDocumentNode} from './views/recipeDetail'
+import {media} from 'sanity-plugin-media'
 
 import {theme} from 'https://themer.sanity.build/api/hues?default=1a6629&primary=00c853;600&transparent=8690a0;800'
 
 export default defineConfig({
   name: 'default',
   title: 'Le nouveau Roberto',
-  icon: () => <img src="/static/icon.png" alt="roberto v2" style={{maxWidth: '100%'}} />,
+  icon: () => <img src="/static/favicon.svg" alt="roberto v2" style={{maxWidth: '100%'}} />,
   theme,
   projectId: '45lcq8dx',
   dataset: 'production',
@@ -23,6 +24,7 @@ export default defineConfig({
   },
   plugins: [
     structureTool({structure, defaultDocumentNode: getDefaultDocumentNode}),
+    media(),
     frFRLocale(),
     ...(isDev ? [visionTool()] : []),
   ],
