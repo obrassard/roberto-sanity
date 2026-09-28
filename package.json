@@ -15,21 +15,22 @@
     "sanity"
   ],
   "dependencies": {
-    "@emotion/css": "^11.11.2",
-    "@portabletext/react": "^3.0.18",
-    "@sanity/locale-fr-fr": "^1.2.5",
-    "@sanity/vision": "^3.41.1",
-    "groq": "^3.41.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sanity": "^3.41.1",
-    "sanity-plugin-media": "^2.2.5",
-    "styled-components": "^6.1.8"
+    "@emotion/css": "^11.13.5",
+    "@portabletext/react": "^3.2.4",
+    "@sanity/locale-fr-fr": "^1.2.37",
+    "@sanity/themer-legacy": "0.2.1",
+    "@sanity/vision": "^3.99.0",
+    "groq": "^3.99.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.99.0",
+    "sanity-plugin-media": "^2.4.2",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^4.0.0",
-    "@types/react": "^18.0.25",
-    "eslint": "^8.6.0",
+    "@sanity/eslint-config-studio": "^7.0.0",
+    "@types/react": "^18.3.31",
+    "eslint": "^8.57.1",
     "prettier": "^3.0.2",
     "typescript": "^5.1.6"
   },
